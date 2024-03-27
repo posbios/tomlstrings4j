@@ -1,6 +1,7 @@
 # tomlstrings4j
 
 A lightweight and simple Java library with limited functionality for transforming TOML files into useful data within a Java application.
+Because I can't believe this didn't already exist and I needed it for a small project.
 
 ## Features
 
@@ -53,7 +54,7 @@ This assumes a method called toMap exists in the Toml class.
 Toml.toMap(Toml.parse(inputStream)) takes the parsed data (t from the previous step) and converts it to a simpler structure: a Map<String, Map<String, String>>. This new map has string keys representing top-level elements in the TOML file. The values are now maps with string keys and string values, likely representing nested key-value pairs in the TOML data.
 
 3. Converting a specific TOML ID to a Class:
-
+This function is experimental and you wouldn't need to use it, however here it is.
 ```Java
 Map<String, Properties> toml = Toml.parse(inputStream);
 StringBean stringBean = Toml.toClass(StringBean.class, toml.get("string.1"));
@@ -64,7 +65,7 @@ Toml.toClass(StringBean.class, Toml.parse(inputStream).get("string.1")) attempts
 Here, "string.1" likely refers to a key in the TOML data that points to a section containing properties that can be mapped to the fields of a StringBean object. This functionality depends on the library supporting automatic conversion between TOML data and Java classes.
 
 4. Converting all TOML groups with a "string" to a list of Classes:
-
+This function is experimental and you wouldn't need to use it, however here it is.
 ```Java
 Map<String, Properties> toml = Toml.parse(inputStream);
 List<StringBean> stringBeans = Toml.toClass(StringBean.class, toml, "string.");
