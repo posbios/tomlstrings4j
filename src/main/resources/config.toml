@@ -1,0 +1,18 @@
+[string.1]
+path = "i am a \"fancy\" string with 'extrange values' like this \ and this \\ and this \\\\"
+
+[string.2]
+path = "this is another string 2"
+
+[list]
+files = ["string", 2, true]
+
+[other-positive]
+b = true
+s = 'yes'
+l = ["one", 'two', 3, true]
+
+[other-negative]
+b = false
+s = 'no'
+l = ["minus one", 'minus two', -3, false]
