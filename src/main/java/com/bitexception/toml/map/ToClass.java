@@ -12,16 +12,32 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * .
+ * These methods already use unsafe reflection and are not suitable for production environments, secure environments, or large applications.
+ * However, they can be useful in other cases and here they are. You can solve all cases efficiently using the Toml.parse method, lambda parallelism and the maps created in your application.
+ * Remember replace placeholders like StringBean and method names with the actual names used by your library and toml file.
+ * 
  * @author yourmom
  */
 public class ToClass {
 
-    public static <R> List<R> map(Map<String, Properties> toml, Class<R> clazz, String id) throws IOException, URISyntaxException {
+    /**
+     * .
+     * It need a class with public fields and same names than toml keywords of sections
+     * 
+     * @param <R> the expected return class with public fields and same names than toml keywords of sections
+     * @param toml retrived toml data
+     * @param clazz the class type you want to use
+     * @param filter the filter to use on toml file sections ([filter-this]). it will try all finds.
+     * @return the reflected class with injected data
+     * @throws IOException if input file bad
+     * @throws URISyntaxException if input file bad
+     */
+    public static <R> List<R> map(Map<String, Properties> toml, Class<R> clazz, String filter) throws IOException, URISyntaxException {
         List<R> result = new ArrayList<>();
 
         for (Map.Entry<String, Properties> e : toml.entrySet()) {
-            if (e.getKey().contains(id)) {
+            if (e.getKey().contains(filter)) {
                 result.add(map(clazz, e.getValue()));
             }
         }
@@ -29,6 +45,17 @@ public class ToClass {
         return result;
     }
 
+    /**
+     * .
+     * It need a class with public fields and same names than toml keywords of sections
+     * 
+     * @param <R> the expected return class with public fields and same names than toml keywords of sections
+     * @param clazz the class type you want to use
+     * @param properties the sectin you want to convert into a class
+     * @return the reflected class with injected data
+     * @throws IOException if input file bad
+     * @throws URISyntaxException if input file bad
+     */
     public static <R> R map(Class<R> clazz, Properties properties) throws IOException, URISyntaxException {
         R result = null;
         try {

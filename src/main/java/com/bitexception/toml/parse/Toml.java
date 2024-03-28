@@ -15,11 +15,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- *
+ * 
+ * Use the parse method to get toml file data
+ * 
  * @author yourmom
  */
 public class Toml {
 
+    /**
+     * Toml parse each .toml file section into a java Properties instance.
+     * 
+     * @param inputStream to toml file
+     * @return each .toml file section into a java Properties instance.
+     * @throws IOException if input file bad
+     * @throws URISyntaxException if input file bad
+     */
     public static Map<String, Properties> parse(InputStream inputStream) throws IOException, URISyntaxException {
         final Map<String, Properties> toml = new HashMap<>();
         Pattern pattern = Pattern.compile("(?<key>.*)=(?<value>.*)");
