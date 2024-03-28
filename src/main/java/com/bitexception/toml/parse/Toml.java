@@ -37,10 +37,10 @@ public class Toml {
                     if (matcher.find()) {
                         String key = matcher.group("key").trim();
                         String value = matcher.group("value").trim();
-                        if (value.startsWith("\"")) {
-                            toml.getOrDefault(currentSection, new Properties()).put(key, noescape(wrappedtoString(value)));
-                        } else if (value.startsWith("[")) {
-                            toml.getOrDefault(currentSection, new Properties()).put(key, stringtoList(value));
+                        if (value.startsWith("[")) {
+                            toml.getOrDefault(currentSection, new Properties()).put(key, csvtoStringlist(value));
+                        } else {
+                            toml.getOrDefault(currentSection, new Properties()).put(key, noescape(cleanTomlStringfields(value)));
                         }
                     }
                 }
@@ -61,13 +61,18 @@ public class Toml {
                 .replace("\\f", "\f");
     }
 
-    private static String wrappedtoString(String input) {
-        String cadena = input.trim();
-        return ((cadena.charAt(0) == '"' || cadena.charAt(0) == '\'') && (cadena.charAt(0) == '"' || cadena.charAt(0) == '\'')) ? cadena.substring(1, cadena.length() - 1) : cadena;
+    private static String cleanTomlStringfields(String input) {
+        String s = input.trim();
+        return ((s.startsWith("\"") && s.endsWith("\"")) || (s.startsWith("\'") && s.endsWith("\'"))) ? removeFirstandLastchar(s) : s;
     }
 
-    private static List<String> stringtoList(String cadena) {
-        return Stream.of(cadena.substring(1, cadena.length() - 1).split(",")).map(Toml::wrappedtoString).collect(Collectors.toList());
+    private static String removeFirstandLastchar(String input) {
+        String s = input.trim();
+        return s.substring(1, s.length() - 1);
+    }
+
+    private static List<String> csvtoStringlist(String s) {
+        return Stream.of(Toml.removeFirstandLastchar(s).split(",")).map(Toml::cleanTomlStringfields).collect(Collectors.toList());
     }
 
 }
