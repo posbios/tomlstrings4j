@@ -1,5 +1,7 @@
 package com.bitexception.toml.parse;
 
+import com.bitexception.toml.map.ToClass;
+import com.bitexception.toml.map.ToMap;
 import com.bitexception.toml.parse.bean.StringBean;
 import java.io.InputStream;
 import static java.lang.System.out;
@@ -50,7 +52,7 @@ public class TomlTest {
         System.out.println("testToMap");
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.toml");
         var t = Toml.parse(inputStream);
-        var m = Toml.toMap(t);
+        var m = ToMap.map(t);
         out.println(m);
 
         assertTrue(true);
@@ -61,7 +63,7 @@ public class TomlTest {
         System.out.println("testToClass");
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.toml");
         var t = Toml.parse(inputStream);
-        out.println(Toml.toClass(StringBean.class, t.get("string.1")));
+        out.println(ToClass.map(StringBean.class, t.get("string.1")));
 
         assertTrue(true);
     }
@@ -71,7 +73,7 @@ public class TomlTest {
         System.out.println("testToListClass");
         InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("config.toml");
         var t = Toml.parse(inputStream);
-        out.println(Toml.toClass(t, StringBean.class, "string."));
+        out.println(ToClass.map(t, StringBean.class, "string."));
 
         assertTrue(true);
     }
