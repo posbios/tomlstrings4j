@@ -1,6 +1,6 @@
 # tomlstrings4j
 
-A lightweight and simple Java library with limited functionality for transforming TOML files into useful data within a Java application.
+A modular lightweight and simple Java library with limited functionality for transforming TOML files into useful data within a Java application.
 
 ## Features
 
@@ -11,6 +11,7 @@ Convert TOML data to Java String or List<String> types
 
 Easy to use
 Lightweight and efficient
+Modular
 
 ## Getting Started
 
